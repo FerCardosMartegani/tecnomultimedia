@@ -1,13 +1,20 @@
 void setup(){
 
   size(400,400);
-  background(190,230,255);
+  colorMode(RGB);  //redundancia por seguridad
 
+}  
 
+void draw(){
+
+ background(190,230,255);
+ 
  //suelo
   fill(240);
-  rect(0,300, 400,100);
+  rectMode(CENTER);
+  rect(200,350, 410,100);
   fill(190,250,250,127);
+  ellipseMode(CENTER);  //redundancia por seguridad
   ellipse(197,350, 250,70);
 
  //brazo der
@@ -86,20 +93,14 @@ void setup(){
  //diálogo
   fill(255);
   triangle(280,190, 300,150, 330,150);
-  rectMode(CENTER);
   rect(332,150, 80,40, 10);
   textSize(20);
   textAlign(CENTER, CENTER);
   fill(0);
   text("Help!", 332,150);
-
-}  
-
-void draw(){
-
+  
+  
  //ubicar cursor
-  print(mouseX);
-  print(" ; ");
-  println(mouseY);
-
+  println(mouseX + " ; " + mouseY);
+  
 }
