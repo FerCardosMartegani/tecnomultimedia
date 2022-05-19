@@ -92,24 +92,14 @@ void etapa3(){
         }
       }
       if(tiempo==1475)  background(0);
-      if(tiempo>1475){
-        fill(10);
-        textSize(40);
-        textAlign(LEFT,CENTER);
-        textFont(fuente1);
-        text("IAN FLEMING'S", posX1c+(figuraSize3*2.5),posY1c+(figuraSize3*4));
-      }
     }else  subetapa=4;
   }
 //--------------------------------------------------------------------------------subetapa4
+  
   if(subetapa==4){
     if(!keyPressed) tiempo++;
     background(0);
     textAlign(LEFT,CENTER);
-    fill(10);
-    textSize(40);
-    textFont(fuente1);
-    text("IAN FLEMING'S", posX1c+(figuraSize3*2.5),posY1c+(figuraSize3*4));
     fill(color3+color(0,10,10));
     textSize(1);
     textFont(fuente2);
@@ -117,11 +107,18 @@ void etapa3(){
     fill(10,10,10);
     text("NO", posX1c+(figuraSize3*2.5),posY1a);
   }
+  if(tiempo>1475){
+    textFont(fuente1);
+    textAlign(LEFT,CENTER);
+    textSize(35);
+    fill(10);
+    text("IAN FLEMING'S", posX1c+(figuraSize3*2.5),posY1c+(figuraSize3*4));
+  }
 }
 
 
 //--------------------------------------------------------------------------------circulos grandes (3+2 columnas)
-color color0,  color1,color2,color3,color4,color5;
+color color0,  color1,color2,color3,color4,color5,color6;
 void circulosGrandes(){
 
   color1=color(4.75,10,10);

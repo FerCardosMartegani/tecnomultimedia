@@ -27,7 +27,7 @@ void etapa6(){
   if(subetapa==1){
 
     if(posX1a>=figuraSize  &&  va){                                        //circulos ida-vuelta horizontal
-      if(tiempo%10==0){
+      if(tiempo%5==0){
         if(posX1a>=(figuraSize/2)+figuraSize*15)
           color1=color(int(random(10)),10,10);  
         grupoCirculos1(posX1a,posY1a, true);                                //  ←  ←  ←
@@ -36,7 +36,7 @@ void etapa6(){
       }
     }else{
       va=false;
-      if(tiempo%5==0){
+      if(tiempo%2==0){
         grupoCirculos1(posX1a,posY1a, true);                              //    →→→
         grupoCirculos1(posX1a-figuraSize*2,posY1a, false);                 //ocultar
         posX1a+=figuraSize;
@@ -112,21 +112,27 @@ void grupoCirculos3(){
   rect(posX1c+figuraSize*9.5,-10, width+10,posY1c+figuraSize*3.5);
   rect(posX1c+figuraSize*9.5,posX1c+figuraSize*4.5, width+10,height+10);
   
-  color3=color(int(random(10)),5,10,random(10));
-  fill(color3);
   for(cambiarY=0; cambiarY<=3.5; cambiarY++){
     for(cambiarX=0; cambiarX<=8.5; cambiarX++){
+      color3=color(int(random(10)),5,10,random(5));
+      fill(color3);
       if((random(0,1))<0.5)  circle(posX1c+(figuraSize*cambiarX),posY1c+(figuraSize*cambiarY), figuraSize);  //arriba izquierda
     }
     for(cambiarX=10; cambiarX<=15; cambiarX++){
+      color3=color(int(random(10)),5,10,random(5));
+      fill(color3);
       if((random(0,1))<0.5)  circle(posX1c+(figuraSize*cambiarX),posY1c+(figuraSize*cambiarY), figuraSize);  //arriba derecha
     }
   }
   for(cambiarY=5; cambiarY<=10; cambiarY++){
     for(cambiarX=0; cambiarX<=8.5; cambiarX++){
+      color3=color(int(random(10)),5,10,random(5));
+      fill(color3);
       if((random(0,1))<0.5)  circle(posX1c+(figuraSize*cambiarX),posY1c+(figuraSize*cambiarY), figuraSize);  //abajo izquierda
     }
     for(cambiarX=10; cambiarX<=15; cambiarX++){
+      color3=color(int(random(10)),5,10,random(5));
+      fill(color3);
       if((random(0,1))<0.5)  circle(posX1c+(figuraSize*cambiarX),posY1c+(figuraSize*cambiarY), figuraSize);  //arriba derecha
     }
   }

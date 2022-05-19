@@ -48,7 +48,7 @@ void etapa2(){
     }else    subetapa=3;
   }
 
-//--------------------------------------------------------------------------------subetapa
+//--------------------------------------------------------------------------------subetapa3 
   if(subetapa>=3){
     if(posX1a>width/2+3 && tiempo<330){
       posX1b = posX1a;
@@ -56,7 +56,7 @@ void etapa2(){
       textAlign(RIGHT,CENTER);
       textSize(20);
       text("-Sigue al agente con el cursor-", width-30,height-20);
-      if(dist(posX1a,height/2, mouseX,mouseY)<=75){                        //Bond interactivo
+      if(dist(posX1a,height/2, mouseX,mouseY)<=75  &&  (pmouseX!=mouseX  ||  pmouseY!=mouseY)){        //Bond interactivo
         posX1a-=2;
       }
     }else subetapa=4;
@@ -78,7 +78,7 @@ void etapa2(){
   }
 //--------------------------------------------------------------------------------subetapa5   
   if(subetapa==5){
-      if(tiempo<550)  cortinaRoja(0,200,500,750,1000,1200);    //cortina de sangre tras el disparo
+      if(tiempo<550) cortinaRoja(0,200,500,750,1000,1200);    //cortina de sangre tras el disparo
       if(posY2b<height+10){
       posY2b+=2;
       }else   subetapa=6;

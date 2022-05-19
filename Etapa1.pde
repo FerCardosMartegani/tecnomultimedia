@@ -6,6 +6,7 @@ float figuraSize = 75;
 void preEtapa1(){
   if(selector!=1){
     tiempo=0;
+    background(0);
     posX1a = -130;
     posX1b = -130;
     alfa = 10;
