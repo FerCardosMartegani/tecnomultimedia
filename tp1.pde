@@ -74,12 +74,12 @@ void draw(){
   
   
   //debug
-  //println("etapa:"+selector+","+subetapa + "  ,  cursor:"+mouseX+","+mouseY + "  ,  tiempo:"+tiempo
-  //+"  ,  pos1a:"+posX1a+","+posY1a + "  ,  size:"+figuraSize + "  contador:"+contador
-  //+"\nDr.:"+(posX1c+(figuraSize3*2.5))+","+(posY1c+(figuraSize3*5.5))
-  //+"  ,  NO:"+(posX1c+(figuraSize3*2.5))+","+(posY1a)
-  //+"  ,  Dr-NO:"+(dist((posX1c+(figuraSize3*2.5)),(posY1c+(figuraSize3*5.5)),(posX1c+(figuraSize3*2.5)),(posY1a)))
-  //+"  ,  pausa:"+pausa);
+  println("etapa:"+selector+","+subetapa + "  ,  cursor:"+mouseX+","+mouseY + "  ,  tiempo:"+tiempo
+  +"  ,  pos1a:"+posX1a+","+posY1a + "  ,  size:"+figuraSize + "  contador:"+contador
+  +"\nDr.:"+(posX1c+(figuraSize3*2.5))+","+(posY1c+(figuraSize3*5.5))
+  +"  ,  NO:"+(posX1c+(figuraSize3*2.5))+","+(posY1a)
+  +"  ,  Dr-NO:"+(dist((posX1c+(figuraSize3*2.5)),(posY1c+(figuraSize3*5.5)),(posX1c+(figuraSize3*2.5)),(posY1a)))
+  +"  ,  pausa:"+pausa);
 }
 
 
