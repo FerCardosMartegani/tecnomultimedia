@@ -159,7 +159,7 @@ void etapa9(){
   }
   
   
-  println("cursor:"+mouseX+","+mouseY + "  ,  radio:"+figuraSize + "  ,  centro:"+(centroX1)+","+(centroY1));
+  //println("cursor:"+mouseX+","+mouseY + "  ,  radio:"+figuraSize + "  ,  centro:"+(centroX1)+","+(centroY1));
 }
 
 void mouseClicked(){
