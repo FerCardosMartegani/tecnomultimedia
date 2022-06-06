@@ -1,4 +1,9 @@
-PImage refeI;  boolean reset,  showCartel,  debug1,debug2,  conColor;
+/*
+ALUMNO: FERNANDO CARDOS MARTEGANI (84256/3).  COMISIÓN 2.
+VIDEO EXPLICATIVO: https://youtu.be/2ohYy2FR-rc
+*/
+
+PImage refeI;  boolean reset,  showCartel,  cuboRefe,imaRefe,  conColor;
 int tiempo,  cartel,tCartel,alfa;
 float cuboX,cuboY,cuboH,  cubos,seg,  sombraX,sombraY,  cuboColor,cuboSat;;
 void setup(){
@@ -12,9 +17,9 @@ void reset(){
 
   if(reset){                                            //valores iniciales
     cubos=4;  seg=3;  cartel=-1;
-    sombraX=sombraY=tiempo=cartel=tCartel=alfa=0;
+    sombraX=sombraY=tiempo=tCartel=alfa=0;  cartel=1;
     cuboColor=cuboSat=0;  conColor=false;
-    debug1=debug2=showCartel=false;
+    cuboRefe=imaRefe=showCartel=false;
     reset=false;
   }
   cuboX=width/(cubos*2); cuboY=cuboX*tan(radians(30));             //trigonometría
@@ -28,13 +33,12 @@ void draw(){
   reset();
   
   background(180);
-  if(debug2)  referencia();                                              //cargar imagen de referencia
-  
-  if(!debug2){
+  if(imaRefe){  imaRefe();                                              //imagen de referencia
+  }else{
     for(int Y=0;  Y<cubos;  Y++){
       for(int X=0; X<=(cubos+1);  X++){
-        if(X%cubos==0){  cuboColor=map(X, 0,cubos,  0,300);                  //cambiar colores
-        }else{  cuboColor=map(cubos-X, 0,cubos,  0,300);  }
+        if(X%2==0){  cuboColor=map(X, 0,cubos,  0,150);                  //cambiar colores
+        }else{  cuboColor=map(X, 0,cubos,  150,300); }
         cubo(-cuboX*0.5+X*(cuboX*2),Y*(cuboH*2+cuboY*2), false);                            //cubos
         cubo(-cuboX*3.5+X*(cuboX*2),(cuboH+cuboY)+Y*(cuboH*2+cuboY*2), false);
         sombras(-cuboX*0.5+X*(cuboX*2),Y*(cuboH*2+cuboY*2));                                //sombras
@@ -43,9 +47,14 @@ void draw(){
     }
   }
   
-  if(!(debug1 || debug2))  controles();
+  if(!(cuboRefe || imaRefe))  controles();                            //cartel de controles
   
-  if(debug1)  debug();
+  if(cuboRefe)  cuboRefe();                                            //cubo de referencia
+  
+  println("cursor:"+mouseX+","+mouseY
+  +"  ,  cubos:"+cubos+" ,segmentos:"+seg
+  +"  ,  cubo: X:"+cuboX+" ,Y:"+cuboY+" ,H:"+cuboH
+  );
 }
 
 
@@ -57,38 +66,24 @@ void cubo(float posX, float posY, boolean showRefe){
   strokeJoin(ROUND);  rectMode(CORNER);
 
   quad(posX,posY,  posX+cuboX,posY+cuboY,  posX+cuboX*2,posY,  posX+cuboX,posY-cuboY);    //cara superior
-  for(int L=1;  L<seg;  L++){
-    float X1=(posX+cuboX*(L/seg));                                       //líneas ascendentes
-    float Y1=(posY+cuboY*(L/seg));
-    line(X1,Y1,  X1+cuboX,Y1-cuboY);
-  }
-  for(int L=1;  L<seg;  L++){
-    float X1=(posX+cuboX*(L/seg));                                       //líneas descendentes
-    float Y1=(posY-cuboY*(L/seg));
-    line(X1,Y1,  X1+cuboX,Y1+cuboY);
-  }
-  
   quad(posX,posY,  posX+cuboX,posY+cuboY,  posX+cuboX,posY+cuboY+cuboH,  posX,posY+cuboH);    //cara izquierda
-  for(int L=1;  L<seg;  L++){
-    line(posX , (posY+cuboH*(L/seg)),                                    //líneas horizontales
-    (posX+cuboX) , (posY+cuboH*(L/(seg*2))+cuboY*(L/seg+1)));
-  }
-  for(int L=1;  L<seg;  L++){
-    float X1=(posX+cuboX*(L/seg));                                      //líneas verticales
-    float Y1=(posY+cuboY*(L/seg));
-    line(X1,Y1,  X1,Y1+cuboH);
-  }
+  quad(posX+cuboX*2,posY,  posX+cuboX*2,posY+cuboH,  posX+cuboX,posY+cuboY+cuboH, posX+cuboX,posY+cuboY);  //cara derecha  
   
-  quad(posX+cuboX*2,posY,  posX+cuboX*2,posY+cuboH,  posX+cuboX,posY+cuboY+cuboH, posX+cuboX,posY+cuboY);  //cara derecha
   for(int L=1;  L<seg;  L++){
-    float X1=(posX+cuboX);
-    line(X1,(posY+cuboH*(L/(seg*2))+cuboY*(L/seg+1)),                    //líneas horizontales
-    X1+cuboX,(posY+cuboH*(L/seg)));
-  }
-  for(int L=1;  L<seg;  L++){
-    float X1=(posX+cuboX*(L/seg+1));                                     //líneas verticales
-    float Y1=(posY-cuboY*(L/seg-1));
-    line(X1,Y1,  X1,Y1+cuboH);
+    float Xs1=(posX+cuboX*(L/seg)); 
+    float Ys1=(posY+cuboY*(L/seg));
+    line(Xs1,Ys1,  Xs1+cuboX,Ys1-cuboY);                                  //líneas ascendentes
+    float Ys2=(posY-cuboY*(L/seg));
+    line(Xs1,Ys2,  Xs1+cuboX,Ys2+cuboY);                                 //líneas descendentes
+    line(posX , (posY+cuboH*(L/seg)),                                    //líneas horizontales izquierda
+    (posX+cuboX) , (posY+cuboH*(L/(seg*2))+cuboY*(L/seg+1)));
+    line(Xs1,Ys1,  Xs1,Ys1+cuboH);                                      //líneas verticales izquierda
+    float Xd1=(posX+cuboX);
+    line(Xd1,(posY+cuboH*(L/(seg*2))+cuboY*(L/seg+1)),                    //líneas horizontales derecha
+    Xd1+cuboX,(posY+cuboH*(L/seg)));
+    float Xd2=(posX+cuboX*(L/seg+1));
+    float Yd2=(posY-cuboY*(L/seg-1));
+    line(Xd2,Yd2,  Xd2,Yd2+cuboH);                                     //líneas verticales derecha
   }
   
   if(showRefe){                                     //líneas de referencia para construir el cubo
@@ -109,8 +104,8 @@ void cubo(float posX, float posY, boolean showRefe){
       stroke(color3);
       line(posX,posY,  posX+cuboX,posY+cuboY);
       fill(color3);
-      textAlign(LEFT,TOP);
-      text("cuboH",  posX,posY+cuboY/2);
+      textAlign(LEFT,BOTTOM);
+      text("cuboH",  posX,posY+cuboY);
   }
 }
 
@@ -125,12 +120,12 @@ void keyPressed(){
         for(float i=cubos;  i==cubos;  cubos=int(random(2,6))){}         //A para cambiar sólo cantidad de cubos
       if(key=='d'  ||  key=='s')
         for(float i=seg;  i==seg;  seg=int(random(3,7))){};              //D para cambiar sólo cantidad de cuadrados
-      if(key=='r')  debug2=!debug2;                           //mostrar cubo de referencia
-      if(key==' ')  conColor=!conColor;                       //ESPACIO para cambiar entre colorido o monocromático
+      if(key=='r')  imaRefe=!imaRefe;                           //mostrar imagen de referencia
+      if(key==' ')  conColor=!conColor;                       //ESPACIO para cambiar entre colorido o acromático
         if(conColor){
-          cuboSat=75;
+          cuboSat=75;    //colorido
         }else{
-          cuboSat=0;
+          cuboSat=0;    //acromático
         }
     }else{
       reset=true;                                            //valores iniciales
@@ -142,7 +137,7 @@ void keyReleased(){  tiempo=0;  }
 
 
 //----------------------------------------------------------------------mostrar cubo de referencia
-void mouseClicked(){  debug1=!debug1;  }
+void mouseClicked(){  cuboRefe=!cuboRefe;  }
 
 
 //----------------------------------------------------------------------Sombras
@@ -168,22 +163,14 @@ void sombras(float posX, float posY){
 }
 
 
-//----------------------------------------------------------------------Imagen de referencia
-void referencia(){
-  imageMode(CENTER);
-  tint(360,25);
-  image(refeI, width/2,height/2, width,height);
-}
-
-
 //----------------------------------------------------------------------Cartel de controles
 void controles(){
   int tam=18;
   int posX=width/2;
   int posY=height-tam;
-  if(tCartel<=5*60){                                          //cada 5 segundos, aparecer o desaparecer el cartel
+  if(tCartel<=5*60){                               //cada 5 segundos, aparecer o desaparecer el cartel
     tCartel++;
-    if(tCartel==2*60)  showCartel=!showCartel;
+    if(tCartel==5*60)  showCartel=!showCartel;
     }else{  tCartel=0;  }
   if(showCartel){
     if(alfa<100)  alfa+=5;               //aumentar opacidad del cartel
@@ -192,7 +179,7 @@ void controles(){
       alfa-=5;                           //reducir opacidad del cartel
       if(alfa==0){
         cartel++;                        //cambiar el cartel, en secuencia
-        if(7<cartel)  cartel=0;
+        if(9<cartel)  cartel=1;
       }
     }
   }
@@ -200,23 +187,28 @@ void controles(){
   rect(0,posY-(tam/2), width,posY+(tam/2));
   fill(0,alfa);  textSize(tam);
   textAlign(CENTER,CENTER);
-  if(cartel==0)  text("Mueve el cursor para cambiar la fuente de luz", posX,posY);
-  if(cartel==1)  text("Pulsa A para cambiar el tamaño de los cubos", posX,posY);
-  if(cartel==2)  text("Pulsa D para cambiar las subdivisiones de los cubos", posX,posY);
-  if(cartel==3)  text("Pulsa S para cambiar el tamaño y las subdivisiones de los cubos", posX,posY);
-  if(cartel==4)  text("Pulsa ESPACIO para prender/apagar el color de los cubos", posX,posY);
-  if(cartel==5)  text("Pulsa R para mostrar/ocultar la imagen de referencia", posX,posY);
-  if(cartel==6)  text("Haz clic para mostrar/ocultar el cubo de referencia", posX,posY);
-  if(cartel==7)  text("Pulsa cualquier otra tecla para reiniciar", posX,posY);
+  if(cartel==1)  text("Mueve el cursor para cambiar la fuente de luz", posX,posY);
+  if(cartel==2)  text("Pulsa A para cambiar el tamaño de los cubos", posX,posY);
+  if(cartel==3)  text("Pulsa D para cambiar las subdivisiones de los cubos", posX,posY);
+  if(cartel==4)  text("Pulsa S para cambiar el tamaño y las subdivisiones de los cubos", posX,posY);
+  if(cartel==5)  text("Pulsa ESPACIO para prender/apagar el color de los cubos", posX,posY);
+  if(cartel==6)  text("Pulsa R para mostrar/ocultar la imagen de referencia", posX,posY);
+  if(cartel==7)  text("Haz clic para mostrar/ocultar el cubo de referencia", posX,posY);
+  if(cartel==8)  text("Puedes mantener pulsado para que cambie varias veces", posX,posY);
+  if(cartel==9)  text("Pulsa cualquier otra tecla para reiniciar", posX,posY);
 }
 
 
-//----------------------------------------------------------------------Debug
-void debug(){
+//----------------------------------------------------------------------Imagen de referencia
+void imaRefe(){
+  imageMode(CENTER);
+  tint(360,25);
+  image(refeI, width/2,height/2, width,height);
+}
+
+
+//----------------------------------------------------------------------Cubo de referencia
+void cuboRefe(){
   fill(180);
-  cubo(mouseX,mouseY,true);                                             //cubo de referencia
-  println("cursor:"+mouseX+","+mouseY
-  +"  ,  cubos:"+cubos+" ,segmentos:"+seg
-  +"  ,  cubo: X:"+cuboX+" ,Y:"+cuboY+" ,H:"+cuboH
-  );
+  cubo(mouseX,mouseY,true);
 }
