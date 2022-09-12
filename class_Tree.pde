@@ -7,7 +7,7 @@ class Tree{
 //----------------------------------------------------------------------------------------------Constructor
   Tree(float X, float Y){
     setX(X); setY(Y);
-    onFire=false;
+    setOnFire(false);
   }
 
 //----------------------------------------------------------------------------------------------Métodos
@@ -26,14 +26,16 @@ class Tree{
     popStyle();
   }
   
-  void isOnFire(){
-    if(dist(rayo[rayo.length-1].getX(),rayo[rayo.length-1].getY(), getX(),getY())<100  &&  rayo[rayo.length-1].showing){
-      onFire=true;
+  void isOnFire(){                                  //reacción de ser golpeado por un rayo
+    if(dist(rayo[rayo.length-1].getX(),rayo[rayo.length-1].getY(), getX(),getY())<100  &&  rayo[0].getS()){
+      setOnFire(true);
     }
   }
+  void setOnFire(boolean F){  onFire=F;  }          //cambiar si lo golpeó un rayo
+  boolean getOnFire(){  return onFire;  }            //ver si lo golpeó un rayo
   
   void setX(float X){  posX=X;  }          //cambiar X
-  float getX(){  return posX;  }            //ver Y
+  float getX(){  return posX;  }            //ver X
   
   void setY(float Y){  posY=Y;  }         //cambiar Y
   float getY(){  return posY;  }            //ver Y

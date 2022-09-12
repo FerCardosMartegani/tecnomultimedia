@@ -1,5 +1,6 @@
 Tree[] trees;  int cantT=6;  //        <-- <-- cantidad de árboles
 Rayo[] rayo;  int corR=5;  //        <-- <-- cantidad de esquinas del rayo
+Fondo fondo;
 
 void setup(){
   size(800,600);
@@ -7,7 +8,6 @@ void setup(){
   
   trees = new Tree[cantT];
   for(int i=0;  i<cantT;  i++){
-    //trees[i] = new Tree(width*i/(cantT+1),height*3/4);
     trees[i] = new Tree(width*i/(cantT-1),height*3/4);
   }
   rayo = new Rayo[5];
@@ -15,20 +15,26 @@ void setup(){
   for(int i=1;  i<corR;  i++){
     rayo[i] = new Rayo(i, rayo[0].getX(),height*i/5);
   }
+  fondo = new Fondo();
 }
 
 void draw(){
-  background(180);
+  fondo.show();
 
-  for(int i=0;  i<corR;  i++){
+  for(int i=0;  i<rayo.length;  i++){
     rayo[i].time();
   }
-  for(int i=0;  i<cantT;  i++){
+  for(int i=0;  i<trees.length;  i++){
     trees[i].show();
     trees[i].isOnFire();
   }
-  
-  if(keyPressed && key=='p'){
-    println(mouseX+","+mouseY);
+}
+
+void keyPressed(){
+  if(key=='p'){  println(mouseX+","+mouseY);  }
+  if(key=='r'){
+    for(int i=0;  i<trees.length;  i++){
+     trees[i].setOnFire(false);
+    }
   }
 }
