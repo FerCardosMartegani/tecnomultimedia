@@ -18,25 +18,25 @@ for(int i=0;  i<corR;  i++){
   }
 
 //----------------------------------------------------------------------------------------------Métodos
-  void show(){                       //dibujar rayo
+  void show(){                       //mostrar rayo
     pushStyle();
       //fill(60,50,100);
-      //ellipse(posX,posY, 10,10);    //al principio dibujaba elipses para testear
+      //ellipse(posX,posY, 10,10);      //al principio dibujaba elipses para testear
       stroke(60,50,100);
       strokeWeight(10);
       for(int i=0;  i<corR-1;  i++){
-        line(rayo[i].getX(),rayo[i].getY(), rayo[i+1].getX(),rayo[i+1].getY());
+        line(rayo[i].getX(),rayo[i].getY(), rayo[i+1].getX(),rayo[i+1].getY());      //líneas que unen el rayo
       }
     popStyle();
   }
   void time(){                    //tiempo de aparición
     if(getT()<60*4){
-      setT(getT()+1);                        //¿cómo aplicar la lógica de objetos? <-- <-- <-- <-- <-- <-- <-- <-- <-- <-- <--
-      if(getT()>60*3){
+      setT(getT()+1);
+      if(getT()>60*3){          //el rayo aparece cada 3 segundos y dura 1 segundo.
         setS(false);
         show();
         if(getT()%5==0){
-          fondo.show();          //(si no está, se actualiza tan rápido que se ve feo)
+          fondo.show();          //(si no pongo esta línea, se actualiza raro y queda feo)
           setS(true);
           shake();
         }

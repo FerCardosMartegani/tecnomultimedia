@@ -11,22 +11,22 @@ class Tree{
   }
 
 //----------------------------------------------------------------------------------------------Métodos
-  void show(){                  //dibujar árbol
+  void show(){                  //mostrar árbol
     pushStyle();
       strokeWeight(10);
-      stroke(30,60,80);                      //tronco y ramas
+      stroke(30,60,80);                              //tronco y ramas
       line(getX(),getY(), getX(),getY()+100);
       line(getX(),getY(), getX()-50,getY()-50);
       line(getX(),getY(), getX()+50,getY()-25);
     if(!onFire){
-      fill(145,80,80);                        //hojas
+      fill(145,80,80);                            //hojas, si no le pegó ningún rayo todavía
       stroke(145,80,100);
       ellipse(posX,posY-50, 150,125);
     }
     popStyle();
   }
   
-  void isOnFire(){                                  //reacción de ser golpeado por un rayo
+  void isOnFire(){                                  //detectar colisión rayo-árbol
     if(dist(rayo[rayo.length-1].getX(),rayo[rayo.length-1].getY(), getX(),getY())<100  &&  rayo[0].getS()){
       setOnFire(true);
     }

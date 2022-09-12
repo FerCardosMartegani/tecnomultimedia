@@ -25,6 +25,7 @@ class Fondo{
     background(getS());
     pushStyle();
       fill(getG());
+      noStroke();
       rectMode(CORNERS);
       rect(getX1(),getY1(), getX2(),getY2());        //pasto
     popStyle();

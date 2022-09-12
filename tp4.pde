@@ -19,14 +19,14 @@ void setup(){
 }
 
 void draw(){
-  fondo.show();
+  fondo.show();                                //mostrar fondo
 
   for(int i=0;  i<rayo.length;  i++){
-    rayo[i].time();
+    rayo[i].time();                            //mostrar rayo
   }
   for(int i=0;  i<trees.length;  i++){
-    trees[i].show();
-    trees[i].isOnFire();
+    trees[i].show();                            //mostrar árboles
+    trees[i].isOnFire();                        //preguntar por colisión rayo-árbol
   }
 }
 
@@ -34,7 +34,7 @@ void keyPressed(){
   if(key=='p'){  println(mouseX+","+mouseY);  }
   if(key=='r'){
     for(int i=0;  i<trees.length;  i++){
-     trees[i].setOnFire(false);
+     trees[i].setOnFire(false);                    //reiniciar árboles
     }
   }
 }
