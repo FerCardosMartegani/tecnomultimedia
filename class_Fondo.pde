@@ -1,65 +1,101 @@
 class Fondo{
   
-//----------------------------------------------------------------------------------------------Propiedades
-  float posX1, posY1, posX2, posY2, posX3, posY3;
+//--------------------------------------------------------------------------------------------------------Propiedades
   color sky, grass;
-  String texto;
-
-//----------------------------------------------------------------------------------------------Constructor
+  float posX,posY,tamX,tamY;
+  
+  
+  Rayo rayo;              //declarar objetos de otras clases
+  //Trees t1, t2;
+  Trees[] trees;
+  
+//--------------------------------------------------------------------------------------------------------Constructor
   Fondo(){
-    setX1(-10);  setY1(height*5/6);
-    setX2(width+10);  setY2(height+10);
-    setS(color(180));
-    setG(color(145,80,80));
-    setX3(width-10);  setY3(height-10);
-    setT("Pulsa R para que los árboles vuelvan a crecer");
-  }
-  
-//----------------------------------------------------------------------------------------------Métodos
-  void show(){
-    if(rayo[0].getS()){          //relámpagos
-      setS(color(360));
-    }else{
-      setS(color(180));          //fondo normal
+    sky=color(180);                //propiedades del fondo
+    grass=color(145,80,80);
+    posX=0;  posY=height*4/6;
+    tamX=width; tamY=height;
+    /*
+    t1 = new Trees(width*1/4,height*4/6);          //instanciar árboles
+    t2 = new Trees(width*2/4,height*4/6);
+    */
+    trees = new Trees[5];
+    for(int i=0;  i<trees.length;  i++){
+      trees[i] = new Trees(i*width/(trees.length-1),height*4/6);
     }
-    background(getS());
+    
+    rayo = new Rayo(random(width*1/10,width*9/10),height*5/7, 5);                      //instanciar rayo
+    //              posX,    posY,    esquinas (al menos 2)
+
+  }
+  
+//--------------------------------------------------------------------------------------------------------Métodos  
+
+  void ejecutar(){            //método ejecutar, desencadena todo lo demás
+    this.show();
+    this.cartel();
+    /*
+    t1.show();
+    t2.show();
+    */
+    for(int i=0;  i<trees.length;  i++){
+      trees[i].show();
+    }
+    rayo.show();
+    
+    this.strike();
+  }
+  
+  void show(){
+    if(rayo.showing){              //relámpagos
+      sky=color(360);
+    }else{
+      sky=color(180);          //fondo normal
+    }
+
+    background(sky);        //mostrar fondo
+    
     pushStyle();
-      fill(getG());
-      noStroke();
       rectMode(CORNERS);
-      rect(getX1(),getY1(), getX2(),getY2());        //pasto
+      fill(color(grass));
+      noStroke();
+      rect(posX,posY, tamX,tamY);          //mostrar pasto
     popStyle();
+  }
+  void cartel(){                    //mostrar cartel de controles
     pushStyle();
-      textAlign(RIGHT,CENTER);
       fill(0);
-      text(getT(), getX3(),getY3());              //cartel
+      textAlign(RIGHT,BOTTOM);
+      textSize(12);
+      text("Pulsa R para que los árboles vuelvan a crecer", width-10,tamY-10);
     popStyle();
   }
   
-  void setX1(float X){  posX1=X;  }          //cambiar X1
-  float getX1(){  return posX1;  }            //ver X1
-  
-  void setX2(float X){  posX2=X;  }          //cambiar X2
-  float getX2(){  return posX2;  }            //ver X2
-  
-  void setY1(float Y){  posY1=Y;  }          //cambiar Y1
-  float getY1(){  return posY1;  }            //ver Y1
-  
-  void setY2(float Y){  posY2=Y;  }          //cambiar Y2
-  float getY2(){  return posY2;  }            //ver Y2
-  
-  void setS(color S){  sky=S;  }          //cambiar color del cielo
-  color getS(){  return sky;  }            //ver color del cielo
-  
-  void setG(color G){  grass=G;  }          //cambiar color del pasto
-  color getG(){  return grass;  }            //ver color del pasto
-  
-  void setX3(float X){  posX3=X;  }          //cambiar X del texto
-  float getX3(){  return posX3;  }            //ver X del texto
-  
-  void setY3(float Y){  posY3=Y;  }          //cambiar X del texto
-  float getY3(){  return posY3;  }            //ver Y del texto
-  
-  void setT(String T){  texto=T;  }          //cambiar color del pasto
-  String getT(){  return texto;  }            //ver color del pasto
+  void strike(){                    //detectar colisión árbol-rayo
+    /*
+    if(rayo.showing){
+      if(dist(rayo.posX,rayo.posY, t1.posX,t1.posY)<100){
+        t1.onFire=true;
+      }
+      if(dist(rayo.posX,rayo.posY, t2.posX,t2.posY)<100){
+        t2.onFire=true;
+      }
+    }
+    */
+    for(int i=0;  i<trees.length;  i++){
+      if(dist(rayo.posX,rayo.posY, trees[i].posX,trees[i].posY)<trees[i].tamX/2  &&  rayo.showing){
+        trees[i].onFire=true;
+      }
+    }
+  }
+  void reset(){                //reiniciar animación
+    rayo.time=60*5;
+    /*
+    t1.onFire=false;
+    t2.onFire=false;
+    */
+    for(int i=0;  i<trees.length;  i++){
+      trees[i].onFire=false;
+    }
+  }
 }
