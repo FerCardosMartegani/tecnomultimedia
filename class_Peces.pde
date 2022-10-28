@@ -6,6 +6,8 @@ class Peces{
   boolean poison, eaten;
   PImage[] pose;
   
+  Bubbles burbujas;
+  
 //-------------------------------------------------------------------------------------------------CONSTRUCTOR
   Peces(boolean v, float x, float y, float min, float max){
     posX=x; posY=y;
@@ -23,7 +25,6 @@ class Peces{
   }
 
 //-------------------------------------------------------------------------------------------------MÉTODOS
-  
   void show(){        //mostrar sprite
     if(!eaten){
       if(poison){  tint(200,100,100);          //tintar si es el venenoso
@@ -42,11 +43,18 @@ class Peces{
     }
   }
   
-  void comido(){
+  void comido(){    //tras ser comido, esperar unos segundos y reaparecer
     if(eaten){
-      if(time<2*60){  time++;
+      if(time<2*60){
+        if(time==0)  burbujas = new Bubbles(posX,posY+tamY/2, width/5);      //al ser comido, generar partículas
+        time++;  burbujas();
       }else{  time=0;  eaten=false;  }
     }
+  }
+  
+  void burbujas(){        //mostrar burbujas
+    burbujas.show();
+    burbujas.mover();
   }
   
 }
