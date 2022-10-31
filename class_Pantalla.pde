@@ -3,6 +3,7 @@ class Pantalla{
 //-------------------------------------------------------------------------------------------------PROPIEDADES
   int select, puntos,ganar,perder;
   PImage fondo, logo, scratch;
+  boolean pausado;
   
   Peces[] peces;
   Shark tibu;
@@ -12,6 +13,7 @@ class Pantalla{
   Carteles puntaje;
   Carteles ganaste;
   Carteles perdiste;
+  Carteles pausa;
   
 //-------------------------------------------------------------------------------------------------CONSTRUCTOR
   Pantalla(){
@@ -23,6 +25,7 @@ class Pantalla{
     puntos=0;
     ganar=20;      //puntos para ganar
     perder=0;      //puntos para perder
+    pausado=false;
     
     tibu = new Shark(width/3,height/2, 5,10);    //tiburón = pos inicial X, pos inicial Y, velocidad X, velocidad Y
     peces = new Peces[4];
@@ -38,6 +41,7 @@ class Pantalla{
     puntaje = new Carteles(" "+puntos+" ", width*9/10,height*1/12, width/20);      //carteles estáticos
     ganaste = new Carteles("Ganaste :D", width/2,height*2/5, width/16);
     perdiste = new Carteles("Perdiste :c", width/2,height*2/5, width/16);
+    pausa = new Carteles("Pausa ||", width/2,height*2/5, width/16);
 
   }
   
@@ -61,20 +65,26 @@ class Pantalla{
   }
   void show1(){          //pantalla de juego
     jugar.burbujas();
-    tibu.show();          //métodos del tiburón
-    tibu.moverX();
-    tibu.moverY();
-    tibu.morder();
-    tibu.enfermar();
-    for(int i=0;  i<peces.length;  i++){      //métodos de los peces
-      peces[i].show();
-      peces[i].mover();
-      peces[i].comido();
+    if(!pausado){
+      tibu.show();          //métodos del tiburón
+      tibu.moverX();
+      tibu.moverY();
+      tibu.morder();
+      tibu.enfermar();
+      for(int i=0;  i<peces.length;  i++){      //métodos de los peces
+        peces[i].show();
+        peces[i].mover();
+        peces[i].comido();
+      }
+      comer();          //detectar colisión
+      if(puntos>=ganar){  select=4;  reset();  }        //ganar
+      if(puntos<perder){  select=5;  reset();  }          //perder
+    }else{
+      pausa.show();
+      controles.show();
+      creditos.show();
     }
-    comer();          //detectar colisión
     puntaje.show();    //cartel de puntaje
-    if(puntos>=ganar){  select=4;  reset();  }        //ganar
-    if(puntos<perder){  select=5;  reset();  }          //perder
   }
   void show2(){          //pantalla de controles
     creditos.show();
@@ -130,7 +140,7 @@ class Pantalla{
       textAlign(CENTER,TOP);  textSize(20);
       text("Juego creado por:\nFernando Cardos\nMartegani\n(84256/3)", posX1+tamX/2,posY1+tamY*3/5);
       textAlign(LEFT,BOTTOM);  textSize(17);  
-      text("Materia:\nTecnología\nmultimedial 1\n \nComisión: 2\n \nDocente:\nMatías Jauregui Lorda",
+      text("Canción: 'Sharks'\nde Imagine Dragons\n \nMateria:\nTecnología\nmultimedial 1\n \nComisión: 2\n \nDocente:\nMatías Jauregui Lorda",
       posX1+tamX*1/20,posY1+tamY*7/8);
       image(scratch, posX1+tamX*8/9,posY1+tamY*2.5/6, scratch.width*2/6,scratch.height*2/6);
       textAlign(RIGHT,BOTTOM);  textSize(17); 
@@ -162,9 +172,10 @@ class Pantalla{
   }
   
   void controles(char k, boolean p){
-    if(k=='w'){  tibu.up=p;  }            //subir tibu
-    if(k=='s'){  tibu.down=p;  }          //bajar tibu
-    if(k==' '){  tibu.eat=p;  }           //morder tibu
+    if(k=='w'){  tibu.up=p;  }            //subir
+    if(k=='s'){  tibu.down=p;  }          //bajar
+    if(k==' '){  tibu.eat=p;  }           //morder
+    if(!keyPressed  &&  k=='p'  &&  select==1){  pausado=!pausado;  }           //pausar/despausar juego
   }
   void click(){
     controles.click();
@@ -174,6 +185,7 @@ class Pantalla{
   
   void reset(){
     puntos=0;
+    puntaje.update(" "+puntos+" ");
     tibu.poison=false;  tibu.time=0;
     for(int i=0;  i<peces.length;  i++){      //métodos de los peces
       peces[i].time=0;

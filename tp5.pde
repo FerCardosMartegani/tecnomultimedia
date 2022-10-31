@@ -16,11 +16,13 @@ void setup(){
   screen = new Pantalla();
   
   sharksSong = new SoundFile(this , "Sharks.mp3");
+  sharksSong.rate(1.1);
+  sharksSong.loop();                              //música de fondo
+  
 }
 
 void draw(){
   screen.game();
-  sharksSong.loop();                    //música de fondo
 }
 
 void keyPressed(){
