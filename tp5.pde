@@ -17,6 +17,7 @@ void setup(){
   
   sharksSong = new SoundFile(this , "Sharks.mp3");
   sharksSong.rate(1.1);
+  sharksSong.amp(0.5);
   sharksSong.loop();                              //música de fondo
   
 }

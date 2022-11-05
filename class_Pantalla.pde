@@ -140,7 +140,7 @@ class Pantalla{
       textAlign(CENTER,TOP);  textSize(20);
       text("Juego creado por:\nFernando Cardos\nMartegani\n(84256/3)", posX1+tamX/2,posY1+tamY*3/5);
       textAlign(LEFT,BOTTOM);  textSize(17);  
-      text("Canción: 'Sharks'\nde Imagine Dragons\n \nMateria:\nTecnología\nmultimedial 1\n \nComisión: 2\n \nDocente:\nMatías Jauregui Lorda",
+      text("Canción: 'Sharks'\nde Imagine Dragons\n \nMateria:\nTecnología\nmultimedial 1\n \nComisión: 2\n \nDocentes:\nMatías Jauregui Lorda\nTobías Albirosa",
       posX1+tamX*1/20,posY1+tamY*7/8);
       image(scratch, posX1+tamX*8/9,posY1+tamY*2.5/6, scratch.width*2/6,scratch.height*2/6);
       textAlign(RIGHT,BOTTOM);  textSize(17); 
