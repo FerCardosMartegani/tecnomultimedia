@@ -52,6 +52,9 @@ class Carteles{
       screen.select=link;      //al hacer clic en el botón, cambiar de pantalla
       
       burbujas = new Bubbles(posX,posY+tam, width/3);    //al hacer clic en el botón, generar burbujas
+      burbujasSound.jump(1);
+      burbujasSound.rate(1.5);
+      burbujasSound.play();
     }
   }
   void burbujas(){

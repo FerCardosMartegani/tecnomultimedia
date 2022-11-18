@@ -7,7 +7,8 @@ class Pantalla{
   
   Peces[] peces;  Shark tibu;
   Carteles controles, creditos, jugar, puntaje, ganaste, perdiste, pausa;
-  SoundFile sharksSong, popSound, burbujasSound;
+  
+  //SoundFile sharksSong;      //declarar objetos para sonido
   
 //-------------------------------------------------------------------------------------------------CONSTRUCTOR
   Pantalla(){
@@ -27,7 +28,7 @@ class Pantalla{
       peces[i] = new Peces(false, random(width/4,width*3/4),random(height/4,height*3/4), 5,10);    //peces normales
     }
     peces[peces.length-1] = new Peces(true, random(width/4,width*3/4),random(height/4,height*3/4), 10,15);  //pez venenoso
-    //peces = normales/venenoso, pos inicial X, pos inicial Y, velocidad mínima, velocidad máxima
+      //peces = normales/venenoso, pos inicial X, pos inicial Y, velocidad mínima, velocidad máxima
     
     controles = new Carteles("CONTROLES", width*2/6,height*5/7, width/24, 2);      //botones
     creditos = new Carteles("CRÉDITOS", width*4/6,height*5/7, width/24, 3);
@@ -36,14 +37,8 @@ class Pantalla{
     ganaste = new Carteles("Ganaste :D", width/2,height*2/5, width/16);
     perdiste = new Carteles("Perdiste :c", width/2,height*2/5, width/16);
     pausa = new Carteles("Pausa ||", width/2,height*2/5, width/16);
-    
-    sharksSong = new SoundFile(this, "Sharks.mp3");            //si intento poner esto en una clase me tira que el constructor no existe                
-    popSound = new SoundFile(this, "BubblePopSound.mp3");  
-    burbujasSound = new SoundFile(this, "BubblesSound.mp3");
-    
-    sharksSong.rate(1.1);
-    sharksSong.amp(0.25);
-    sharksSong.loop();                              //música de fondo
+        
+    //sharksSong = new SoundFile(this, "Sharks.mp3");            //si intento poner esto en una clase me tira que el constructor no existe                
   }
   
 //-------------------------------------------------------------------------------------------------MÉTODOS
@@ -56,19 +51,29 @@ class Pantalla{
     if(select==3){  show3();  }          //pantalla de créditos
     if(select==4){  show4();  }          //pantalla de ganar
     if(select==5){  show5();  }          //pantalla de perder
+    
+    if(select>1  ||  pausado){  sharksSong.amp(0.15);    //cambiar volumen entre pantallas
+    }else{  sharksSong.amp(0.5);  }
+    if(!sharksSong.isPlaying()){
+      sharksSong.jump(0.5);
+      sharksSong.rate(1.1);
+      sharksSong.loop();                              //música de fondo
+    }
+    
   }
   void show0(){          //pantalla inicial
     controles.show();
     creditos.show();
     jugar.show();
-    sharksSong.amp(0.25);
+
     
     image(logo, width/2,height*6/20, width/2,height/2);
   }
   void show1(){          //pantalla de juego
     jugar.burbujas();
+    if(ganarSound.isPlaying()){  ganarSound.stop();  }
+    if(perderSound.isPlaying()){  perderSound.stop();  }
     if(!pausado){
-      sharksSong.amp(0.5);
       tibu.show();          //métodos del tiburón
       tibu.moverX();
       tibu.moverY();
@@ -80,13 +85,21 @@ class Pantalla{
         peces[i].comido();
       }
       comer();          //detectar colisión
-      if(puntos>=ganar){  select=4;  reset();  }        //ganar
-      if(puntos<perder){  select=5;  reset();  }          //perder
+      if(puntos>=ganar){
+        select=4;  reset();        //ganar
+        ganarSound.amp(0.2);
+        ganarSound.jump(0.2);
+        ganarSound.play();
+      }
+      if(puntos<perder){
+        select=5;  reset();          //perder
+        perderSound.amp(0.2);
+        perderSound.play();
+      }
     }else{
       pausa.show();
       controles.show();
       creditos.show();
-      sharksSong.amp(0.25);
     }
     puntaje.show();    //cartel de puntaje
   }
@@ -94,7 +107,6 @@ class Pantalla{
     creditos.show();
     controles.burbujas();
     jugar.show();
-    sharksSong.amp(0.25);
     
     pushStyle();
       rectMode(CORNERS);  stroke(0);  strokeWeight(10);  fill(200,100,25);        //fondo
@@ -126,7 +138,6 @@ class Pantalla{
     controles.show();
     creditos.burbujas();
     jugar.show();
-    sharksSong.amp(0.25);
     
     pushStyle();
       rectMode(CORNERS);  stroke(0);  strokeWeight(10);  fill(200,100,25);        //fondo
@@ -151,21 +162,29 @@ class Pantalla{
     controles.show();
     creditos.show();
     jugar.show();
-    sharksSong.amp(0.25);
   }
   void show5(){          //pantalla de perder
     perdiste.show();
     controles.show();
     creditos.show();
     jugar.show();
-    sharksSong.amp(0.25);
   }
   
   void comer(){
     for(int i=0;  i<peces.length;  i++){
       if(dist(tibu.mouthX,tibu.mouthY,  peces[i].posX,peces[i].posY)<tibu.mouthR  &&  tibu.sprite==1  &&  !peces[i].eaten){
         peces[i].eaten=true;
-        if(i==peces.length-1){  tibu.poison=true;  puntos-=5;  }else{  puntos++;  }
+        if(i==peces.length-1){
+          tibu.poison=true;  puntos-=5;    //envenenar
+          comerMaloSound.amp(0.5);
+          comerMaloSound.jump(0.2);
+          comerMaloSound.play();
+        }else{
+          puntos++;                      //sumar puntos
+          comerBuenoSound.amp(0.5);
+          comerBuenoSound.jump(0.2);
+          comerBuenoSound.play();
+        }
         puntaje.update(" "+puntos+" ");
       }
     }
