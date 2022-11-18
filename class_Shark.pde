@@ -13,7 +13,7 @@ class Shark{
     eat=up=down=poison=false;
     sprite=time=0;
     if(posX<width/2){  direc=0;  }else{  direc=1;  }
-    pose = new PImage[4][2];
+    pose = new PImage[3][2];
     for(int b=0;  b<2;  b++){                                //cargar sprites de Tibu
       for(int a=0;  a<pose.length;  a++){
         pose[a][b] = loadImage("shark-"+a+","+b+".png");
@@ -50,7 +50,7 @@ class Shark{
   }
   void enfermar(){
     if(poison){
-      sprite=3;
+      sprite=2;
       if(time<3*60){  time++;  }else{  poison=false;  time=0;  }
     }
   }

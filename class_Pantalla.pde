@@ -5,15 +5,9 @@ class Pantalla{
   PImage fondo, logo, scratch;
   boolean pausado;
   
-  Peces[] peces;
-  Shark tibu;
-  Carteles controles;
-  Carteles creditos;
-  Carteles jugar;
-  Carteles puntaje;
-  Carteles ganaste;
-  Carteles perdiste;
-  Carteles pausa;
+  Peces[] peces;  Shark tibu;
+  Carteles controles, creditos, jugar, puntaje, ganaste, perdiste, pausa;
+  SoundFile sharksSong, popSound, burbujasSound;
   
 //-------------------------------------------------------------------------------------------------CONSTRUCTOR
   Pantalla(){
@@ -42,7 +36,14 @@ class Pantalla{
     ganaste = new Carteles("Ganaste :D", width/2,height*2/5, width/16);
     perdiste = new Carteles("Perdiste :c", width/2,height*2/5, width/16);
     pausa = new Carteles("Pausa ||", width/2,height*2/5, width/16);
-
+    
+    sharksSong = new SoundFile(this, "Sharks.mp3");            //si intento poner esto en una clase me tira que el constructor no existe                
+    popSound = new SoundFile(this, "BubblePopSound.mp3");  
+    burbujasSound = new SoundFile(this, "BubblesSound.mp3");
+    
+    sharksSong.rate(1.1);
+    sharksSong.amp(0.25);
+    sharksSong.loop();                              //música de fondo
   }
   
 //-------------------------------------------------------------------------------------------------MÉTODOS
@@ -60,12 +61,14 @@ class Pantalla{
     controles.show();
     creditos.show();
     jugar.show();
+    sharksSong.amp(0.25);
     
     image(logo, width/2,height*6/20, width/2,height/2);
   }
   void show1(){          //pantalla de juego
     jugar.burbujas();
     if(!pausado){
+      sharksSong.amp(0.5);
       tibu.show();          //métodos del tiburón
       tibu.moverX();
       tibu.moverY();
@@ -83,6 +86,7 @@ class Pantalla{
       pausa.show();
       controles.show();
       creditos.show();
+      sharksSong.amp(0.25);
     }
     puntaje.show();    //cartel de puntaje
   }
@@ -90,62 +94,56 @@ class Pantalla{
     creditos.show();
     controles.burbujas();
     jugar.show();
+    sharksSong.amp(0.25);
     
-    //acá hay un quilombo de coords que copié y pegué tal cual del tp3, ni lo revisé. 
-      
-    float posX1=width/25, posY1=posX1,                      //rect del fondo
-    posX2=width-posX1, posY2=height*3/4-20-(width/5)/2,
-    tamX=posX2-posX1, tamY=posY2-posY1;
     pushStyle();
-      rectMode(CORNERS);  stroke(0);  strokeWeight(10);
-      fill(200,100,25);
-      rect(posX1,posY1, posX2,posY2, (width*1/3)/3);
+      rectMode(CORNERS);  stroke(0);  strokeWeight(10);  fill(200,100,25);        //fondo
+      rect(width*1/16,height*1/16, width*15/16,height*10/16, width/9);
       
       textAlign(CENTER,CENTER);  textSize(20);  fill(360);
       
-      tint(360,25);
-      image(tibu.pose[0][0], posX1+tamX*1/7,posY1+tamY*1.25/6,  tibu.pose[0][0].width*2/3,tibu.pose[0][0].height*2/3);
-      image(tibu.pose[0][0], posX1+tamX*1/7,posY1+tamY*4/6,  tibu.pose[0][0].width*2/3,tibu.pose[0][0].height*2/3);
-      tint(200,100,100);
-      image(peces[0].pose[0], posX1+tamX*6/7,posY1+tamY*4/6);
-      noTint();
-      image(tibu.pose[0][0], posX1+tamX*1/7,posY1+tamY*1/6,  tibu.pose[0][0].width*2/3,tibu.pose[0][0].height*2/3);
-      text("Pulsa 'w'\npara subir.", posX1+tamX*1/7,posY1+tamY*2.25/6);
-      image(tibu.pose[0][0], posX1+tamX*1/7,posY1+tamY*4.25/6,  tibu.pose[0][0].width*2/3,tibu.pose[0][0].height*2/3);
-      text("Pulsa 's'\npara bajar.", posX1+tamX*1/7,posY1+tamY*5.25/6);
-      image(tibu.pose[1][0], posX1+tamX*3.5/7,posY1+tamY*1/6,  tibu.pose[1][0].width*2/3,tibu.pose[1][0].height*2/3);
-      text("Pulsa 'ESPACIO' para\nabrir la boca.\nSi la abres mucho,\nte cansarás.", posX1+tamX*3.5/7,posY1+tamY*2.5/6);
-      text("||\n \nPulsa 'p' para\npausar el juego.", posX1+tamX*3.5/7,posY1+tamY*5/6);
-      image(peces[0].pose[0], posX1+tamX*6/7,posY1+tamY*1/6);
-      text("Come "+ganar+" peces\npara ganar.", posX1+tamX*6/7,posY1+tamY*2.25/6);
-      text("¡Cuidado con el\npez venenoso!", posX1+tamX*6/7,posY1+tamY*5.25/6);
+      tint(360,25);  image(tibu.pose[0][0], width*3/16,height*3/16,  tibu.pose[0][0].width*2/3,tibu.pose[0][0].height*2/3);      //W para subir
+      noTint();  image(tibu.pose[0][0], width*3/16,height*2.5/16,  tibu.pose[0][0].width*2/3,tibu.pose[0][0].height*2/3);
+      text("Pulsa 'w'\npara subir.", width*3/16,height*4.5/16);
+      
+      tint(360,25);  image(tibu.pose[0][0], width*3/16,height*6.5/16,  tibu.pose[0][0].width*2/3,tibu.pose[0][0].height*2/3);      //S para bajar
+      noTint();  image(tibu.pose[0][0], width*3/16,height*7/16,  tibu.pose[0][0].width*2/3,tibu.pose[0][0].height*2/3);
+      text("Pulsa 's'\npara bajar.", width*3/16,height*8.5/16);
+      
+      noTint();  image(tibu.pose[1][0], width*8/16,height*2.5/16,  tibu.pose[1][0].width*2/3,tibu.pose[1][0].height*2/3);         //ESPACIO para comer
+      text("Pulsa 'ESPACIO' para\nabrir la boca.", width*8/16,height*4.5/16);
+      
+      text("||\n \nPulsa 'p' para\npausar el juego.", width*8/16,height*8/16);                  //P para pausar
+      
+      noTint();  image(peces[0].pose[0], width*13/16,height*3/16);                                //Come peces para ganar
+      text("Come "+ganar+" peces\npara ganar.", width*13/16,height*4.5/16);
+      
+      tint(200,100,100);  image(peces[0].pose[0], width*13/16,height*7/16);              //Cuidado con el pez venenoso
+      text("¡Cuidado con el\npez venenoso!", width*13/16,height*8.5/16);
     popStyle();
   }
   void show3(){          //pantalla de créditos
     controles.show();
     creditos.burbujas();
     jugar.show();
+    sharksSong.amp(0.25);
     
-    float posX1=width/25, posY1=posX1,                      //rect del fondo
-    posX2=width-posX1, posY2=height*3/4-20-(width/5)/2,
-    tamX=posX2-posX1, tamY=posY2-posY1;
     pushStyle();
-      rectMode(CORNERS);  stroke(0);  strokeWeight(10);
-      fill(200,100,25);
-      rect(posX1,posY1, posX2,posY2, (width*1/3)/3);
+      rectMode(CORNERS);  stroke(0);  strokeWeight(10);  fill(200,100,25);        //fondo
+      rect(width*1/16,height*1/16, width*15/16,height*10/16, width/9);
       
-      fill(360);
-      
-      image(logo, posX1+tamX*1/2,posY1+tamY*2/6,  logo.width*1/3,logo.height*1/3);
-      textAlign(CENTER,TOP);  textSize(20);
-      text("Juego creado por:\nFernando Cardos\nMartegani\n(84256/3)", posX1+tamX/2,posY1+tamY*3/5);
-      textAlign(LEFT,BOTTOM);  textSize(17);  
+      textAlign(LEFT,BOTTOM);  textSize(17);  fill(360);
       text("Canción: 'Sharks'\nde Imagine Dragons\n \nMateria:\nTecnología\nmultimedial 1\n \nComisión: 2\n \nDocentes:\nMatías Jauregui Lorda\nTobías Albirosa",
-      posX1+tamX*1/20,posY1+tamY*7/8);
-      image(scratch, posX1+tamX*8/9,posY1+tamY*2.5/6, scratch.width*2/6,scratch.height*2/6);
-      textAlign(RIGHT,BOTTOM);  textSize(17); 
+      width*1.5/16,height*8/16);
+      
+      textAlign(CENTER,TOP);  textSize(18);  fill(360);
+      image(logo, width*8/16,height*4/16,  logo.width*1/3,logo.height*1/3);
+      text("Juego creado por:\nFernando Cardos\nMartegani\n(84256/3)", width*8/16,height*7/16);
+      
+      textAlign(RIGHT,BOTTOM);  textSize(17);  fill(360);
+      image(scratch, width*13.5/16,height*4/16, scratch.width*2/6,scratch.height*2/6);
       text("Imágenes de:\nScratch\n \nEl juego es una\nadaptación de un\nprograma que hice en\nScratch hace tiempo.",
-      posX1+tamX*19/20,posY1+tamY*7/8);
+      width*14.5/16,height*8/16);
     popStyle();
   }
   void show4(){          //pantalla de ganar
@@ -153,12 +151,14 @@ class Pantalla{
     controles.show();
     creditos.show();
     jugar.show();
+    sharksSong.amp(0.25);
   }
   void show5(){          //pantalla de perder
     perdiste.show();
     controles.show();
     creditos.show();
     jugar.show();
+    sharksSong.amp(0.25);
   }
   
   void comer(){

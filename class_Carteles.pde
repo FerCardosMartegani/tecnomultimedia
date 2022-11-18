@@ -21,7 +21,7 @@ class Carteles{
   }
   void constructor(String s, float x, float y, float t){
     posX=x;  posY=y;  tam=t;  texto=s;
-    fuente = loadFont("CooperBlack-50.vlw");  textFont(fuente);
+    fuente = loadFont("CooperBlack-20.vlw");  textFont(fuente);
     burbujas = new Bubbles(0,0,0);      //se instancia pero no se manifiesta
   }
   

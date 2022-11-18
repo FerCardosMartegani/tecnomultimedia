@@ -4,9 +4,9 @@ VIDEO EXPLICATIVO:
 */
 
 import processing.sound.*;
-SoundFile sharksSong;
 
 Pantalla screen;
+SoundFile sharksSong, popSound, burbujasSound;
 
 void setup(){
   size(800,700);
@@ -15,10 +15,9 @@ void setup(){
   
   screen = new Pantalla();
   
-  sharksSong = new SoundFile(this , "Sharks.mp3");
-  sharksSong.rate(1.1);
-  sharksSong.amp(0.5);
-  sharksSong.loop();                              //música de fondo
+  sharksSong = new SoundFile(this, "Sharks.mp3");            //si intento poner esto en una clase me tira que el constructor no existe                
+  popSound = new SoundFile(this, "BubblePopSound.mp3");  
+  burbujasSound = new SoundFile(this, "BubblesSound.mp3");
   
 }
 
