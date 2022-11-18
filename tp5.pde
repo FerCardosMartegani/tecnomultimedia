@@ -1,19 +1,20 @@
 /*
 ALUMNO: FERNANDO CARDOS MARTEGANI (84256/3).  COMISIÓN 2.
-VIDEO EXPLICATIVO: 
+VIDEO EXPLICATIVO: https://youtu.be/NI2I05LRbY4
 */
 
 import processing.sound.*;
 
 Pantalla screen;
-SoundFile sharksSong,  popSound, burbujasSound,  comerBuenoSound, comerMaloSound,  ganarSound, perderSound;      //declarar objetos para sonidos
+SoundFile sharksSong,  popSound, burbujasSound,
+comerBuenoSound, comerMaloSound,  ganarSound, perderSound;      //declarar objetos para sonidos
 
 void setup(){
   size(800,700);
   colorMode(HSB,360,100,100,100);
   imageMode(CENTER);  rectMode(CENTER);
   
-  screen = new Pantalla();
+  screen = new Pantalla(20);      //              <------ ACÁ PODÉS DECIRLE CUÁNTOS PUNTOS PARA GANAR (YO LO PONGO EN 20)
   
   sharksSong = new SoundFile(this, "Sharks.mp3");            //si intento poner esto en una clase me tira que el constructor no existe                
   popSound = new SoundFile(this, "BubblePopSound.mp3");  

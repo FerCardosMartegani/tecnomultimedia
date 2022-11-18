@@ -11,14 +11,14 @@ class Pantalla{
   //SoundFile sharksSong;      //declarar objetos para sonido
   
 //-------------------------------------------------------------------------------------------------CONSTRUCTOR
-  Pantalla(){
+  Pantalla(int g){
     select=0;
     fondo = loadImage("underwater.png");        //cargas archivos
     logo = loadImage("Title.png");
     scratch = loadImage("Scratch.png");
     
     puntos=0;
-    ganar=20;      //puntos para ganar
+    ganar=g;      //puntos para ganar (por constructor)
     perder=0;      //puntos para perder
     pausado=false;
     
@@ -71,8 +71,8 @@ class Pantalla{
   }
   void show1(){          //pantalla de juego
     jugar.burbujas();
-    if(ganarSound.isPlaying()){  ganarSound.stop();  }
-    if(perderSound.isPlaying()){  perderSound.stop();  }
+    ganarSound.stop();    //por algún motivo en vez de detenerlo le baja el volumen a ganarSound. El de perderSound funciona bien.
+    perderSound.stop();
     if(!pausado){
       tibu.show();          //métodos del tiburón
       tibu.moverX();
@@ -87,9 +87,9 @@ class Pantalla{
       comer();          //detectar colisión
       if(puntos>=ganar){
         select=4;  reset();        //ganar
-        ganarSound.amp(0.2);
-        ganarSound.jump(0.2);
-        ganarSound.play();
+          ganarSound.amp(0.2);
+          ganarSound.jump(0.8);
+          ganarSound.play();
       }
       if(puntos<perder){
         select=5;  reset();          //perder
