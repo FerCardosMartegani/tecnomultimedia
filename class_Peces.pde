@@ -48,10 +48,9 @@ class Peces{
       if(time<2*60){
         if(time==0){
           burbujas = new Bubbles(posX,posY+tamY/2, width/5);      //al ser comido, generar partículas
-          burbujasSound.jump(1);
           burbujasSound.rate(1.5);
           burbujasSound.amp(0.25);
-          burbujasSound.play();
+          burbujasSound.jump(1);
         }
         time++;  burbujas();
       }else{  time=0;  eaten=false;  }

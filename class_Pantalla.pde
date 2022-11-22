@@ -55,9 +55,8 @@ class Pantalla{
     if(select>1  ||  pausado){  sharksSong.amp(0.15);    //cambiar volumen entre pantallas
     }else{  sharksSong.amp(0.5);  }
     if(!sharksSong.isPlaying()){
-      sharksSong.jump(0.5);
       sharksSong.rate(1.1);
-      sharksSong.loop();                              //música de fondo
+      sharksSong.jump(0.7);                              //música de fondo
     }
     
   }
@@ -71,7 +70,7 @@ class Pantalla{
   }
   void show1(){          //pantalla de juego
     jugar.burbujas();
-    ganarSound.stop();    //por algún motivo en vez de detenerlo le baja el volumen a ganarSound. El de perderSound funciona bien.
+    ganarSound.stop();
     perderSound.stop();
     if(!pausado){
       tibu.show();          //métodos del tiburón
@@ -87,9 +86,8 @@ class Pantalla{
       comer();          //detectar colisión
       if(puntos>=ganar){
         select=4;  reset();        //ganar
-          ganarSound.amp(0.2);
-          ganarSound.jump(0.8);
-          ganarSound.play();
+        ganarSound.amp(0.2);
+        ganarSound.jump(0.8);
       }
       if(puntos<perder){
         select=5;  reset();          //perder
@@ -178,12 +176,10 @@ class Pantalla{
           tibu.poison=true;  puntos-=5;    //envenenar
           comerMaloSound.amp(0.5);
           comerMaloSound.jump(0.2);
-          comerMaloSound.play();
         }else{
           puntos++;                      //sumar puntos
           comerBuenoSound.amp(0.5);
           comerBuenoSound.jump(0.2);
-          comerBuenoSound.play();
         }
         puntaje.update(" "+puntos+" ");
       }
