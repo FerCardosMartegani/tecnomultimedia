@@ -3,10 +3,13 @@
 //----------------------constructor
 //arreglo de mesas x
 //arreglo de mesas y
+//arreglo de mesas ancho
+//arreglo de mesas alto
 //crear mesas
 
 //arreglo de sillas x
 //arreglo de sillas y
+//arreglo de sillas tamaño
 //crear sillas en torno a las mesas
 
 
