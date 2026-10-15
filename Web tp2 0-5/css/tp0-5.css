@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,700&family=Oswald:wght@500&family=Roboto+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+/*
+font-family: 'Montserrat', sans-serif;
+font-family: 'Oswald', sans-serif;
+font-family: 'Roboto Mono', monospace;
+font-family: 'Fredoka One', cursive;
+*/
+
+body {
+	text-align: justify;
+}
+
+.logo-sidenav {
+	margin: -50px auto;
+	padding: 15%;
+}
+
+h1, h2 {
+	font-family: 'Fredoka One', cursive;
+	text-decoration: underline;
+}
+
+.subrayar {
+	text-decoration: underline;
+}
+.cursiva {
+	font-style: italic;
+}
+.texto-chico {
+	font-size: 12px;
+}

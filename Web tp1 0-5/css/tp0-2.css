@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@700&family=Roboto+Mono&display=swap');
+/*
+font-family: 'Play', sans-serif;
+font-family: 'Roboto Mono', monospace;
+*/
+
+body {
+  background-color: #FFC771;
+}
+.index{
+  font-family: 'Roboto Mono', monospace;
+}
+.cuerpo {
+  width: 420px;
+  height: 240px;
+  margin: 32px auto;
+  padding: 32px;
+  border: 2px solid red;
+  border-radius: 5px;
+  background-color: #FFE9D1;
+  font-family: 'Play', sans-serif;
+}
+.perfil {
+  /* foto = 381x412px */
+  width: 127px;
+  height: 137px;
+  border: 10px solid orange;
+  border-radius: 100px;
+  text-align: center;
+}
+.columnas, .contacto {
+  column-count: 2;
+  column-fill: all;
+}
+.espacio {
+  height: 10px;
+  background-color: orange;
+}
+.contacto {
+  margin: 25px auto;
+  padding: 0px;
+  text-align: center;
+  column-rule: 5px solid orange;
+  vertical-align: middle;
+}
+.medio {
+  color: orange;
+  font-size: 15px;
+  margin: 0px;
+}
+.direc {
+  margin: 0px;
+  color: gray;
+  font-size: 12px;
+}

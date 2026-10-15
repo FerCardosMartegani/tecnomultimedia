@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,700&family=Oswald:wght@500&family=Roboto+Mono&display=swap');
+/*
+font-family: 'Montserrat', sans-serif;
+font-family: 'Oswald', sans-serif;
+font-family: 'Roboto Mono', monospace;
+*/
+body {
+  background-color: lightgray;
+}
+.index {
+  font-family: 'Roboto Mono', monospace;
+}
+.cuerpo {
+  width: 1344px;
+  margin: 32px auto;
+  padding: 32px;
+  background-color: white;
+  font-family: 'Montserrat', sans-serif;
+  text-align: justify;
+}
+h1, h2 {
+  font-family: 'Oswald', sans-serif;
+}
+h2 {
+  margin: 64px auto auto auto;
+}
+img {   /*  Fotos = 1920x1080px -> 384x216px  */
+  width: 384px;
+  height: 216px;
+}
+.columnas {
+  column-count: 3;
+  column-fill: balance;
+  margin: auto auto 32px auto;
+}
+.columnas p {
+  font-size: 12px;
+  width: 384px;
+}
+.barra {
+  height: 1px;
+  margin: 50px auto;
+  background-color: black;
+}
+.pie {
+  font-size: 10px;
+}
